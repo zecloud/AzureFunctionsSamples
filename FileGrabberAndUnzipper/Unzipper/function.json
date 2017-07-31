@@ -1,0 +1,19 @@
+{
+  "bindings": [
+    {
+      "type": "blob",
+      "name": "outputBlob",
+      "path": "dayfiles/{datetime}.csv",
+      "connection": "AzureWebJobsDashboard",
+      "direction": "out"
+    },
+    {
+      "type": "blobTrigger",
+      "name": "myBlob",
+      "path": "files",
+      "connection": "AzureWebJobsDashboard",
+      "direction": "in"
+    }
+  ],
+  "disabled": false
+}

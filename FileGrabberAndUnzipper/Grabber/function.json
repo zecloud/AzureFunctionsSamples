@@ -1,0 +1,17 @@
+{
+  "bindings": [
+    {
+      "type": "blob",
+      "name": "outBlob",
+      "path": "files/{rand-guid}",
+      "connection": "AzureWebJobsDashboard",
+      "direction": "out"
+    },
+    {
+      "type": "manualTrigger",
+      "name": "input",
+      "direction": "in"
+    }
+  ],
+  "disabled": false
+}

@@ -1,5 +1,4 @@
 
-You c
 Create Two Functions in Azure
 
 the first one is the grabber it download a file in a blob 
@@ -12,8 +11,11 @@ Choose C# function
 
 You can also choose to deploy function using Azure Cli 
 
+First Create a resource Group
 az group create --name myResourceGroup --location westeurope 
 
+Create a storage account
 az storage account create --name <storage_name> --location westeurope --resource-group myResourceGroup --sku Standard_LRS
 
+Create the function app
 az functionapp create --name <app_name> --storage-account  <storage_name>  --resource-group myResourceGroup --consumption-plan-location westeurope

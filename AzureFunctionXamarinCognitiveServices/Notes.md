@@ -6,6 +6,6 @@ Créer un projet Xamarin Forms
 
 Mettre à jour Xamarin Forms
 
-Installer le package Xam.Plugin.Media V2.6.2
+Installer le package Nuget Xam.Plugin.Media -> V2.6.2 visiblement un probléme avec la version 3 et xamarin forms android
 
-Installer le package Windows Azure Storage
+Installer le package Nuget  Windows Azure Storage

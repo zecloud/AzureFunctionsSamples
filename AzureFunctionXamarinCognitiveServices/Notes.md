@@ -8,3 +8,4 @@ Mettre à jour Xamarin Forms
 
 Installer le package Xam.Plugin.Media V2.6.2
 
+Installer le package Windows Azure Storage

@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Plugin.Media;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Blob;
+
 
 namespace FaceMobile
 {
@@ -18,7 +20,7 @@ namespace FaceMobile
             CameraButton.Clicked += CameraButton_Clicked;
         }
 
-        public static async Task performBlobOperation(string path)
+        public static async Task performBlobOperation(string filename,Stream FileStream)
         {
             // Retrieve storage account from connection string.
             CloudStorageAccount storageAccount = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=your_account_name_here;AccountKey=your_account_key_here");
@@ -33,17 +35,16 @@ namespace FaceMobile
             await container.CreateIfNotExistsAsync();
 
             // Retrieve reference to a blob named "myblob".
-            CloudBlockBlob blockBlob = container.GetBlockBlobReference("myblob");
+            CloudBlockBlob blockBlob = container.GetBlockBlobReference(filename);
 
             // Create the "myblob" blob with the text "Hello, world!"
             //await blockBlob.UploadTextAsync("Hello, world!");
-            await blockBlob.UploadFromByteArrayAsync();
+            await blockBlob.UploadFromStreamAsync(FileStream);
         }
 
 
         private async void CameraButton_Clicked(object sender, EventArgs e)
-        {
-          
+        {          
             await CrossMedia.Current.Initialize();
 
             if (!CrossMedia.Current.IsCameraAvailable || !CrossMedia.Current.IsTakePhotoSupported)
@@ -51,18 +52,20 @@ namespace FaceMobile
                 DisplayAlert("No Camera", ":( No camera available.", "OK");
                 return;
             }
-
+            var FileName = "test.jpg";
             var file = await CrossMedia.Current.TakePhotoAsync(new Plugin.Media.Abstractions.StoreCameraMediaOptions
             {
                 Directory = "Sample",
-                Name = "test.jpg"
+                Name = FileName
             });
 
             if (file == null)
                 return;
 
             await DisplayAlert("File Location", file.Path, "OK");
-
+            await performBlobOperation(FileName, file.GetStream());
+           
+            file.Dispose();
             PhotoImage.Source = ImageSource.FromStream(() =>
             {
                 var stream = file.GetStream();

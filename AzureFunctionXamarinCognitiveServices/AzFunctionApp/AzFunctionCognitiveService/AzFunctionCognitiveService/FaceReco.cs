@@ -21,7 +21,7 @@ namespace AzFunctionCognitiveService
     public static class FaceReco
     {
         [FunctionName("FaceReco")]
-        public static async Task Run([BlobTrigger("images/{name}.jpg", Connection = "")]Stream image, string name, [Table("faceRectangle", Connection = "")]IAsyncCollector<FaceRectangle> outTable, TraceWriter log)
+        public static async Task Run([BlobTrigger("images/{name}.jpg", Connection = "AzureWebJobsStorage")]Stream image, string name, [Table("faceRectangle", Connection = "AzureWebJobsStorage")]IAsyncCollector<FaceRectangle> outTable, TraceWriter log)
         {
             string result = await CallVisionAPI(image);
             log.Info(result);
